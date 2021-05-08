@@ -5,7 +5,6 @@ import csv
 
 #add variables
 month_count=0
-#profit_loss_count=["", 0]  #change it to list to capture see if it fixes average count results
 profit_loss_count=0
 gprofit=0
 gloss=0
@@ -38,7 +37,6 @@ with open(csvpath) as csvfile:
             #calculate change in profit/loss revenue and add it to the list starting with month 2
             change = float(row[1])-previous_plrev
             change_list.append(change)
-            #change_list= change_list + [change]
             previous_plrev=float(row[1])
         
         #increase month count and Total
@@ -62,7 +60,7 @@ print("Financial Analysis")
 print("-------------------------------")
 print(f"Total months : {month_count}")
 print(f"Total: ${profit_loss_count}")
-print(f"Average change: {avg_change}") #fix this 
+print(f"Average change: {avg_change}") 
 print(f"Greatest Increase in Profits: {pday} (${int(gprofit)})")
 print(f"Greatest Decrease in Profits: {lday} (${int(gloss)})")
 
