@@ -39,8 +39,8 @@ with open(csvpath) as csvfile:
 # calculate the percentage per candidate /may need to create 3rd list
 for x in range(len(candidate_list)):
     #candidate_votes =int(cvotes_list[x])
-    percent= (int(cvotes_list[x])/total_votes)*100 #set to print 3 decimal spaces
-    percent ="{:.3f}".format(percent)
+    percent= (int(cvotes_list[x])/total_votes)*100 
+    percent ="{:.3f}".format(percent) #set to print 3 decimal spaces without rounding
     cpercent_list.append(percent) #add percentage to the list
 
 #find max value in number of votes
@@ -48,6 +48,7 @@ max(cvotes_list)
 winnerIndex = cvotes_list.index(max(cvotes_list))
 #print(winnerIndex) #test to see if getting correct index 
 
+# Print to terminal 
 print("Election Results")
 print("---------------------------")
 print(f"Total Votes: {total_votes}")           
@@ -58,3 +59,15 @@ for candidates in range(len(candidate_list)):
 print("---------------------------")
 print(f"Winner: {candidate_list[winnerIndex]}")
 print("---------------------------")    
+
+#export results to output file: 
+with open(output_path, 'w') as file:
+    file.write("Election Results\n")
+    file.write("---------------------------\n")
+    file.write(f"Total Votes: {total_votes} \n")
+    file.write("---------------------------\n")
+    for candidates in range(len(candidate_list)):
+       file.write(f"{candidate_list[candidates]}: {cpercent_list[candidates]}% ({cvotes_list[candidates]}) \n")
+    file.write("---------------------------\n")
+    file.write(f"Winner: {candidate_list[winnerIndex]}\n")
+    file.write("---------------------------\n")    
