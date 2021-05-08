@@ -6,8 +6,9 @@ import csv
 total_votes= 0
 candidate_list=[]
 cvotes_list=[]
-cpercent=0.0
-
+cpercent_list=[]
+#percent=0.0
+maxPercent=0.0
 
 #Specify the file to read from
 csvpath = os.path.join('Resources', 'election_data.csv')
@@ -34,9 +35,23 @@ with open(csvpath) as csvfile:
             candidate_list.append(candidate)
             cvotes_list.append(1) #give the newly added candidate 1 vote
 
-print(candidate_list, cvotes_list)
+
+# calculate the percentage per candidate /may need to create 3rd list
+for x in range(len(candidate_list)):
+    candidate_votes =int(cvotes_list[x])
+    percent=(candidate_votes/total_votes)*100
+    cpercent_list.append(percent) #add percentage to the list
+    if percent > maxPercent:
+        winnerIndex=x  #set the index for the winner to use later
+
+
 print("Election Results")
 print("---------------------------")
 print(f"Total Votes: {total_votes}")           
 print("---------------------------")
-    
+#print the output of each list in oder f
+for candidates in range(len(candidate_list)):
+    print(f"{candidate_list[candidates]}: {cpercent_list[candidates]}% ({cvotes_list[candidates]}) ")
+print("---------------------------")
+print(f"Winner: {candidate_list[winnerIndex]}")
+print("---------------------------")    
