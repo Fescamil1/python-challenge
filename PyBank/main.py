@@ -9,6 +9,7 @@ month_count=0
 profit_loss_count=0
 gprofit=0
 gloss=0
+change=0
 
 #create a list to capture changes
 change_list=[]
@@ -27,19 +28,22 @@ with open(csvpath) as csvfile:
 
     # Read and Skip the header row first 
     csv_header = next(csvreader)
-    #print(csv_header) #use to test if able to open file 
     
     # Read each row of data after the header
     for row in csvreader:
-        #increase month count
+        
+        if month_count ==0:
+            previous_plrev=float(row[1]) #dont calculate change for 1st month
+        else:
+            #calculate change in profit/loss revenue and add it to the list starting with month 2
+            change = float(row[1])-previous_plrev
+            change_list.append(change)
+            #change_list= change_list + [change]
+            previous_plrev=float(row[1])
+        
+        #increase month count and Total
         month_count+=1 
         profit_loss_count+= int(row[1])
-        
-        #calculate change in profit/loss revenue and add it to the list
-        change = float(row[1])-previous_plrev
-        #change_list.append(change)
-        change_list= change_list + [change]
-        previous_plrev=float(row[1])
 
         #find greatest values
         if change > gprofit:
