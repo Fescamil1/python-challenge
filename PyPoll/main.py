@@ -38,12 +38,15 @@ with open(csvpath) as csvfile:
 
 # calculate the percentage per candidate /may need to create 3rd list
 for x in range(len(candidate_list)):
-    candidate_votes =int(cvotes_list[x])
-    percent=(candidate_votes/total_votes)*100
+    #candidate_votes =int(cvotes_list[x])
+    percent= (int(cvotes_list[x])/total_votes)*100 #set to print 3 decimal spaces
+    percent ="{:.3f}".format(percent)
     cpercent_list.append(percent) #add percentage to the list
-    if percent > maxPercent:
-        winnerIndex=x  #set the index for the winner to use later
 
+#find max value in number of votes
+max(cvotes_list)
+winnerIndex = cvotes_list.index(max(cvotes_list))
+#print(winnerIndex) #test to see if getting correct index 
 
 print("Election Results")
 print("---------------------------")
