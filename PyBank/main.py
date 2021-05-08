@@ -5,6 +5,7 @@ import csv
 
 #add variables
 month_count=0
+#profit_loss_count=["", 0]  #change it to list to capture see if it fixes average count results
 profit_loss_count=0
 gprofit=0
 gloss=0
@@ -17,7 +18,7 @@ previous_plrev=0 #set starting point for capturing the previous profit/lost
 csvpath = os.path.join('Resources', 'budget_data.csv')
 
 # Specify the file to write to
-#output_path = os.path.join("analysis", "output.txt")
+output_path = os.path.join("analysis", "PyBankAnalysis.txt")
 
 with open(csvpath) as csvfile:
     
@@ -35,9 +36,10 @@ with open(csvpath) as csvfile:
         profit_loss_count+= int(row[1])
         
         #calculate change in profit/loss revenue and add it to the list
-        change = int(row[1])-previous_plrev
-        change_list.append(change)
-        previous_plrev=int(row[1])
+        change = float(row[1])-previous_plrev
+        #change_list.append(change)
+        change_list= change_list + [change]
+        previous_plrev=float(row[1])
 
         #find greatest values
         if change > gprofit:
@@ -49,7 +51,7 @@ with open(csvpath) as csvfile:
        
 
 #calcuate average change after         
-avg_change=sum(change_list)/len(change_list)
+avg_change=round((sum(change_list)/len(change_list)),ndigits=2)
 
 #print to Terminal
 print("Financial Analysis")
@@ -57,5 +59,15 @@ print("-------------------------------")
 print(f"Total months : {month_count}")
 print(f"Total: ${profit_loss_count}")
 print(f"Average change: {avg_change}") #fix this 
-print(f"Greatest Increase in Profits: {pday} (${gprofit})")
-print(f"Greatest Decrease in Profits: {lday} (${gloss})")
+print(f"Greatest Increase in Profits: {pday} (${int(gprofit)})")
+print(f"Greatest Decrease in Profits: {lday} (${int(gloss)})")
+
+#write to outputfile: 
+with open(output_path, 'w') as file:
+    file.write("Financial Analysis\n")
+    file.write("-------------------------------\n")
+    file.write(f"Total Months : {month_count} \n")
+    file.write(f"Total: ${profit_loss_count}\n")
+    file.write(f"Average Change: {avg_change}\n") 
+    file.write(f"Greatest Increase in Profits: {pday} (${int(gprofit)})\n")
+    file.write(f"Greatest Decrease in Profits: {lday} (${int(gloss)})\n")
